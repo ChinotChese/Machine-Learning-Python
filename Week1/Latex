@@ -1,0 +1,99 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+
+
+
+% Edit these as appropriate
+\newcommand\course{Machine Learning}
+\newcommand\hwnumber{1}                  
+\newcommand\ChiNguyen{Chi Nguyen}         
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\ChiNguyen}
+
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+    \section*{Problem 1}
+        Let H denote the even that has Hansen’s disease
+        Let P denote the even that test positive\\
+        The probability is:\\
+        \begin{align*}
+            P(H \mid P) &= \frac{P(PH)}{P(P)}\\
+                        &= \frac{P(PH)}{P(PH) + P(PH^\complement)}\\
+                        &= \frac{(0.5)(0.98)}{(0.05)(0.98) + (0.03)(0.95)}\\
+                        &= 0.6323
+        \end{align*}
+    
+    \section*{Problem 2}
+        \begin{enumerate}
+            \item Univariate normal distribution
+                \begin{align*}
+                    \int_{-\infty}^{\infty} p(x)dx 
+                    &= \int_{-\infty}^{\infty}\frac{1}{{\sigma\sqrt {2\pi }}}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}dx \\
+                    &= \int_{-\infty}^{\infty}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}dx \frac{1}{\sigma\sqrt {2\pi}}
+                \end{align*}
+                    
+                
+                
+                \begin{equation*}
+                    I = \int_{-\infty}^{\infty}e^{{{ - \left( {x - \mu } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {x - \mu } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}dx
+                      = \int_{-\infty}^{\infty}e^{-y^2/2\sigma ^2}dy
+                \end{equation*}
+                    
+                \begin{equation*}
+                    I^2 = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-x^2/2\sigma ^2}e^{-y^2/2\sigma ^2}dxdy
+                        = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-(x^2+y^2)/2\sigma ^2}dxdy
+                \end{equation*}
+                
+                With
+                \begin{align*}
+                    x = r\cos{\theta}\\
+                    y = r\sin{\theta}
+                \end{align*}
+                Apply Jacobian of the change of variables, we have:
+                \begin{equation*}
+                    \begin{split}
+                        I^2 &= \int_{0}^{2\pi}\int_{0}^{\infty}e^{-r^2/2\sigma ^2}rdrd\theta\\
+                            &= 2\pi \int_{0}^{\infty}e^{-r^2/2\sigma ^2}rdr\\
+                            &= 2\pi(-\sigma^2)\e^{-r^2/\sigma^2}\Big|_0^\infty\\
+                            &= 2\pi\sigma^2
+                    \end{split}
+                \end{equation*}
+                \Rightarrow I = \sqrt{2\pi\sigma^2} \Rightarrow \[\int_{-\infty}^{\infty} p(x)dx\] = 1 \Rightarrow p(x) \ normalized\\
+                
+                MEAN: E[X] = \(\int_{-\infty}^{\infty}xf(x)dx\) = \(\int_{-\infty}^{\infty}xe^{-(x-\mu)^2/2\sigma^2}dx\frac{1}{\sqrt{2\pi\sigma^2}}\)
+        
+                Let \(y = x - \mu\) \Rightarrow \(x = y + \mu\), dx = dy
+                \begin{align*}
+                    E(X) &= \int_{-\infty}^{\infty}(y + \mu)e^{-y^2/2\sigma^2}dy \frac{1}{\sqrt{2\pi}\sigma}\\ 
+                         &= \int_{-\infty}^{\infty}ye^{-y^2/2\sigma^2}dy \frac{1}{\sqrt{2\pi}\sigma} + \int_{-\infty}^{\infty}e^{-y^2/2\sigma^2}dy \frac{\mu}{\sqrt{2\pi}\sigma}\\  &= 0 + \mu\\
+                         &= \mu
+                \end{align*}
+                
+                VAR: V[X] = \(\int_{-\infty}^{\infty}(x-\mu)^2f(x)dx\) = \(\int_{-\infty}^{\infty}y^2e^{-y^2/2\sigma^2}dy\frac{1}{\sqrt{2\pi}\sigma}\)
+                \begin{align*}
+                    u &= y  &  du &= dy \\
+                   dv &= ye^{-y^2/2\sigma^2}dy & v &= -\sigma^2e^{-y^2/2\sigma^2}
+                \end{align*}
+                
+                \begin{align*}
+                    V[X] &= \Big[-\sigma^2ye^{-y^2/2\sigma^2}\big|_{-\infty}^\infty +\sigma^2\int_{-\infty}^{\infty}e^{-y^2/2\sigma^2}\Big]\frac{1}{\sqrt{2\pi}\sigma}\\
+                         &= 0 + \sigma^2\\
+                         &= \sigma^2
+                \end{align*}
+                
+                
+        \end{enumerate}
+    
+\end{document}
