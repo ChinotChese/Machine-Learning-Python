@@ -1,0 +1,67 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+
+
+% Edit these as appropriate
+\newcommand\course{Machine Learning}
+\newcommand\hwnumber{2}                  
+\newcommand\ChiNguyen{Chi Nguyen}         
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\ChiNguyen}
+
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+    \section{Find w}
+    
+    Observations: \(x = (x_1, x_2, ..., x_n)^T\)\\
+    Target: \(t = (t_1, t_2, ..., t_n)^T\) = y(x, W) + $\epsilon$\\
+    Model: \(y(x, w) = w_0 + x_1w_1 + x_2w_2 + ... + x_n w_n\)
+    
+    \begin{align*}
+        t &= y(x, w) + N(0, \beta^{-1})t = N(y(x, w), \beta^{-1}) \ with \ \beta = \sigma^{-1}\\
+        p(t) &= N(t|y(x, w), \beta^{-1})\\
+        \rightarrow p(t_n) &= N(t_n|y(x_n, w), \beta^{-1})\\
+        \rightarrow p(t|x, w, \beta) &= \prod_{n=1}^{N}N(t_n|y(x_n, w), \beta^{-1})\\
+        N(t_n|y(x, w), \beta^{-1}) &= \frac{1}{\sqrt{2\pi\beta^{-1}}}e^{-(t_n-y(x, w))^2\beta/2}\\ 
+    \end{align*}
+Using Maximum Likelihood, we have:
+    \begin{equation*}
+        \begin{split}
+            p(t|x, w, \beta) &\rightarrow max\\
+            log(\prod_{n=1}^{N}e^{-(t_n-y(x, w))^2\beta/2}) &\rightarrow max\\
+            \sum_{n=1}^{N}(t_n - y(x, w))^2 &\rightarrow min
+        \end{split}
+    \end{equation*}
+    
+    We have: x = \begin{bmatrix}1 & x_1\\...\\1 & x_n\end{bmatrix},
+           & t = \begin{bmatrix}t_1\\...\\t_n\end{bmatrix},
+           & w = \begin{bmatrix}w_0\\w_1\end{bmatrix}
+    \rightarrow y = \begin{bmatrix}y_1\\...\\y_n\end{bmatrix} = \begin{bmatrix}w_1x_1\\...\\w_n x_n\end{bmatrix} = xw\\
+    \rightarrow t - y = \begin{bmatrix}t_1 - y_1\\...\\t_n - y_n\end{bmatrix} \rightarrow \(||t - y||_2^2 = \sum_{n=1}^{N}(t_n - y_n)^2\)
+
+    \begin{align*}
+        L &= ||t - xw||_2^2\\
+        \frac{\sigma L}{\sigma w} &= -2x^T(t-xw) = 0\\
+        x^Tt &= x^Txw\\
+        w &= (x^Tx)^{-1}x^Tt
+    \end{align*}
+    
+    \newpage
+    \section{X^TX \ inverse \ when \ X \ full \ rank}
+    When X full rank, \(Xa = 0\) has the trivial solution a = 0\\
+    \rightarrow \text{The reduced row echelon form of X is I}\\
+    \rightarrow \(\prod_{i=1}^{N}E_i A = I\) \text with $E_i$ is the matrix that A reduced row\\
+    \rightarrow $A = \prod_{N}^{i=1}E_i^{-1}I$ \rightarrow A \ inverse
+\end{document}
